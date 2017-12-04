@@ -22,12 +22,17 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.networkextension.packet-tunnel</string>
 		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).PacketTunnelProvider</string>
+		<string>$(PRODUCT_NAME:c99extidentifier).PacketTunnelProvider</string>
 	</dict>
 </dict>
 </plist>

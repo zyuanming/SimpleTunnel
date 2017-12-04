@@ -56,10 +56,7 @@ class StatusViewController: UITableViewController {
 		navigationItem.title = targetManager.localizedDescription
 
 		// Register to be notified of changes in the status.
-		NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object: targetManager.connection, queue: OperationQueue.main, using: { notification in
-			self.statusLabel.text = self.targetManager.connection.status.description
-			self.startStopToggle.isOn = (self.targetManager.connection.status != .disconnected && self.targetManager.connection.status != .disconnecting && self.targetManager.connection.status != .invalid)
-		})
+		addVPNStatusObserver()
 
 		// Disable the start/stop toggle if the configuration is not enabled.
 		startStopToggle.isEnabled = enabledSwitch.isOn
@@ -112,15 +109,111 @@ class StatusViewController: UITableViewController {
 	/// Handle the user toggling the "VPN" switch.
 	@IBAction func startStopToggled(_ sender: AnyObject) {
 		if targetManager.connection.status == .disconnected || targetManager.connection.status == .invalid {
-			do {
-				try targetManager.connection.startVPNTunnel()
-			}
-			catch {
-				simpleTunnelLog("Failed to start the VPN: \(error)")
-			}
+            do {
+                try targetManager.connection.startVPNTunnel()
+            }
+            catch {
+                simpleTunnelLog("Failed to start the VPN: \(error)")
+            }
+
+//            startVPNWithOptions(nil)
 		}
 		else {
 			targetManager.connection.stopVPNTunnel()
 		}
 	}
+
+
+    fileprivate func startVPNWithOptions(_ options: [String : NSObject]?, complete: ((NETunnelProviderManager?, Error?) -> Void)? = nil) {
+
+        // Load provider
+        loadAndCreateProviderManager { (manager, error) -> Void in
+            if let error = error {
+                complete?(nil, error)
+            }else{
+                guard let manager = manager else {
+                    complete?(nil, nil)
+                    return
+                }
+                if manager.connection.status == .disconnected || manager.connection.status == .invalid {
+                    do {
+                        try manager.connection.startVPNTunnel(options: options)
+                        complete?(manager, nil)
+                    }catch {
+                        complete?(nil, error)
+                    }
+                }else{
+                    complete?(manager, nil)
+                }
+            }
+        }
+    }
+
+    fileprivate func loadAndCreateProviderManager(_ complete: @escaping (NETunnelProviderManager?, Error?) -> Void ) {
+        NETunnelProviderManager.loadAllFromPreferences { [unowned self] (managers, error) -> Void in
+            if let managers = managers {
+                let manager: NETunnelProviderManager
+                if managers.count > 0 {
+                    manager = managers[0]
+                }else{
+                    manager = self.createProviderManager()
+                }
+                manager.isEnabled = true
+                manager.localizedDescription = "Demo VPN"
+                manager.protocolConfiguration?.serverAddress = "172.18.236.44:8882"
+                manager.saveToPreferences(completionHandler: { (error) -> Void in
+                    if let error = error {
+                        complete(nil, error)
+                    }else{
+                        manager.loadFromPreferences(completionHandler: { (error) -> Void in
+                            if let error = error {
+                                complete(nil, error)
+                            }else{
+                                complete(manager, nil)
+                            }
+                        })
+                    }
+                })
+            }else{
+                complete(nil, error)
+            }
+        }
+    }
+
+    fileprivate func createProviderManager() -> NETunnelProviderManager {
+        let manager = NETunnelProviderManager()
+        manager.protocolConfiguration = NETunnelProviderProtocol()
+        return manager
+    }
+
+    func addVPNStatusObserver() {
+
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object: targetManager.connection, queue: OperationQueue.main, using: { notification in
+            self.statusLabel.text = self.targetManager.connection.status.description
+            self.startStopToggle.isOn = (self.targetManager.connection.status != .disconnected && self.targetManager.connection.status != .disconnecting && self.targetManager.connection.status != .invalid)
+        })
+
+//        loadProviderManager { [unowned self] (manager) -> Void in
+//            if let manager = manager {
+//                NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object: manager.connection, queue: OperationQueue.main, using: { notification in
+//                    self.statusLabel.text = manager.connection.status.description
+//                    self.startStopToggle.isOn = (manager.connection.status != .disconnected && manager.connection.status != .disconnecting && manager.connection.status != .invalid)
+//                })
+//            }
+//        }
+    }
+
+
+    public func loadProviderManager(_ complete: @escaping (NETunnelProviderManager?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences { (managers, error) -> Void in
+            if let managers = managers {
+                if managers.count > 0 {
+                    let manager = managers[0]
+                    complete(manager)
+                    return
+                }
+            }
+            complete(nil)
+        }
+    }
 }

@@ -33,6 +33,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, TunnelDelegate, ClientTunnel
 		let newTunnel = ClientTunnel()
 		newTunnel.delegate = self
 
+        print("hello.........ming.......")
 		if let error = newTunnel.startTunnel(self) {
 			completionHandler(error as NSError)
 		}
