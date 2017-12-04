@@ -15,8 +15,6 @@
 		60CA8FE01FD5088200F1B18B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA8FDF1FD5088200F1B18B /* NetworkExtension.framework */; };
 		60CA8FE11FD5088500F1B18B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA8FDF1FD5088200F1B18B /* NetworkExtension.framework */; };
 		60CA8FE21FD5088800F1B18B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA8FDF1FD5088200F1B18B /* NetworkExtension.framework */; };
-		60CA8FF71FD545BC00F1B18B /* SimpleTunnelServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01A16941A8A615F00BC9EFD /* SimpleTunnelServices.framework */; };
-		60CA8FF81FD545C300F1B18B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA8FDF1FD5088200F1B18B /* NetworkExtension.framework */; };
 		60CA8FFE1FD54FE000F1B18B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA8FDF1FD5088200F1B18B /* NetworkExtension.framework */; };
 		60CA90001FD5513500F1B18B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA8FDF1FD5088200F1B18B /* NetworkExtension.framework */; };
 		720FCA981B057C7900B168EB /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720FCA971B057C7900B168EB /* DataExtension.swift */; };
@@ -255,8 +253,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60CA8FF81FD545C300F1B18B /* NetworkExtension.framework in Frameworks */,
-				60CA8FF71FD545BC00F1B18B /* SimpleTunnelServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
