@@ -38,7 +38,7 @@ The NEProvider family of APIs require the following entitlement:
 
 The SimpleTunnel.app and the provider extensions will not run if they are not code signed with this entitlement.
 
-You can request this entitlement by sending an email to networkextension@apple.com.
+You can request this entitlement from your Apple Developer Account Center simply and also just from Xcode.
 
 The SimpleTunnel iOS products require iOS 9.0 or newer.
 The SimpleTunnel OS X products require OS X 11.0 or newer.
