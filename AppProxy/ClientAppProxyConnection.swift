@@ -105,7 +105,7 @@ class ClientAppProxyConnection : Connection {
 			return
 		}
 
-		guard let localAddress = (tunnel as? ClientTunnel)?.connection!.localAddress as? NWHostEndpoint else {
+		guard let localAddress = ClientTunnel.connection!.localAddress as? NWHostEndpoint else {
 			simpleTunnelLog("Failed to get localAddress.")
 			handleErrorCondition(.internal)
 			return

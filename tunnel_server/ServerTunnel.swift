@@ -315,6 +315,8 @@ class ServerDelegate : NSObject, NetServiceDelegate {
 
 	// MARK: NSNetServiceDelegate
 
+    var sts: ServerTunnel?
+
 	/// Handle the "failed to publish" event.
 	func netService(sender: NetService, didNotPublish errorDict: [String : NSNumber]) {
 		simpleTunnelLog("Failed to publish network service")
@@ -329,7 +331,7 @@ class ServerDelegate : NSObject, NetServiceDelegate {
 	/// Handle the "new connection" event.
 	func netService(_ sender: NetService, didAcceptConnectionWith inputStream: InputStream, outputStream: OutputStream) {
 		simpleTunnelLog("Accepted a new connection")
-		_ = ServerTunnel(newReadStream: inputStream, newWriteStream: outputStream)
+		sts = ServerTunnel(newReadStream: inputStream, newWriteStream: outputStream)
 	}
 
 	/// Handle the "stopped" event.

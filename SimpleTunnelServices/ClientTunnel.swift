@@ -29,7 +29,7 @@ open class ClientTunnel: Tunnel {
 	// MARK: Properties
 
 	/// The tunnel connection.
-	open var connection: NWTCPConnection?
+	open static var connection: NWTCPConnection?
 
 	/// The last error that occurred on the tunnel.
 	open var lastError: NSError?
@@ -69,10 +69,10 @@ open class ClientTunnel: Tunnel {
 		}
 
 		// Kick off the connection to the server.
-		connection = provider.createTCPConnection(to: endpoint, enableTLS:false, tlsParameters:nil, delegate:nil)
+        ClientTunnel.connection = provider.createTCPConnection(to: endpoint, enableTLS:false, tlsParameters:nil, delegate:nil)
 
 		// Register for notificationes when the connection status changes.
-		connection!.addObserver(self, forKeyPath: "state", options: .initial, context: &connection)
+		ClientTunnel.connection!.addObserver(self, forKeyPath: "state", options: .initial, context: &ClientTunnel.connection)
 
 		return nil
 	}
@@ -85,7 +85,7 @@ open class ClientTunnel: Tunnel {
 
 	/// Read a SimpleTunnel packet from the tunnel connection.
 	func readNextPacket() {
-		guard let targetConnection = connection else {
+		guard let targetConnection = ClientTunnel.connection else {
 			closeTunnelWithError(SimpleTunnelError.badConnection as NSError)
 			return
 		}
@@ -147,23 +147,37 @@ open class ClientTunnel: Tunnel {
 			return
 		}
 
-		connection?.write(messageData, completionHandler: completionHandler as! (Error?) -> Void)
+        ClientTunnel.connection?.write(messageData, completionHandler: { (error) in
+            if let error = error {
+                let nsError = error as NSError
+                completionHandler(nsError)
+            } else {
+                completionHandler(nil)
+            }
+        })
 	}
 
 	// MARK: NSObject
 
 	/// Handle changes to the tunnel connection state.
 	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-		guard keyPath == "state" && context?.assumingMemoryBound(to: Optional<NWTCPConnection>.self).pointee == connection else {
+
+        guard let keyPath1 = keyPath, let context1 = context else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+
+
+		guard keyPath1 == "state" && context1.assumingMemoryBound(to: NWTCPConnection.self).pointee == ClientTunnel.connection else {
 			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 			return
 		}
 
-		simpleTunnelLog("Tunnel connection state changed to \(connection!.state)")
+		simpleTunnelLog("Tunnel connection state changed to \(ClientTunnel.connection!.state)")
 
-		switch connection!.state {
+		switch ClientTunnel.connection!.state {
 			case .connected:
-				if let remoteAddress = self.connection!.remoteAddress as? NWHostEndpoint {
+				if let remoteAddress = ClientTunnel.connection!.remoteAddress as? NWHostEndpoint {
 					remoteHost = remoteAddress.hostname
 				}
 
@@ -174,11 +188,11 @@ open class ClientTunnel: Tunnel {
 				delegate?.tunnelDidOpen(self)
 
 			case .disconnected:
-				closeTunnelWithError(connection!.error as NSError?)
+				closeTunnelWithError(ClientTunnel.connection!.error as NSError?)
 
 			case .cancelled:
-				connection!.removeObserver(self, forKeyPath:"state", context:&connection)
-				connection = nil
+				ClientTunnel.connection!.removeObserver(self, forKeyPath:"state", context:&ClientTunnel.connection)
+				ClientTunnel.connection = nil
 				delegate?.tunnelDidClose(self)
 
 			default:
@@ -192,7 +206,7 @@ open class ClientTunnel: Tunnel {
 	override open func closeTunnel() {
 		super.closeTunnel()
 		// Close the tunnel connection.
-		if let TCPConnection = connection {
+		if let TCPConnection = ClientTunnel.connection {
 			TCPConnection.cancel()
 		}
 
@@ -200,7 +214,7 @@ open class ClientTunnel: Tunnel {
 
 	/// Write data to the tunnel connection.
 	override func writeDataToTunnel(_ data: Data, startingAtOffset: Int) -> Int {
-		connection?.write(data) { error in
+		ClientTunnel.connection?.write(data) { error in
 			if error != nil {
 				self.closeTunnelWithError(error as NSError?)
 			}
