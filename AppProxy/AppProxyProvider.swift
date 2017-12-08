@@ -21,7 +21,7 @@ class AppProxyProvider: NEAppProxyProvider, TunnelDelegate {
 	var pendingStartCompletion: ((NSError?) -> Void)?
 
 	/// The completion handler to call when the tunnel is fully disconnected.
-	var pendingStopCompletion: ((Void) -> Void)?
+	var pendingStopCompletion: (() -> Void)?
 
 	// MARK: NEAppProxyProvider
 

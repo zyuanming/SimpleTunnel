@@ -79,7 +79,7 @@ open class FilterUtilities {
 		simpleTunnelLog("fetch rules called")
 
 		guard serverAddress != nil else { return }
-		simpleTunnelLog("Fetching rules from \(serverAddress)")
+        simpleTunnelLog("Fetching rules from \(String(describing: serverAddress))")
 
 		guard let infoURL = URL(string: "http://\(serverAddress!)/rules/") else { return }
 		simpleTunnelLog("Rules url is \(infoURL)")

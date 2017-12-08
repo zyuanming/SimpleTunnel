@@ -60,7 +60,7 @@ class ContentFilterController: UITableViewController {
 				self.rulesServerCell.textField.text = NEFilterManager.shared().providerConfiguration?.serverAddress
 				FilterUtilities.defaults?.setValue(NEFilterManager.shared().providerConfiguration?.serverAddress, forKey: "serverAddress")
 			}
-		}
+		} as (() -> Void)
 
 		rulesServerCell.valueChanged = {
 			guard let serverIPAddress = self.rulesServerCell.textField.text , !serverIPAddress.isEmpty else { return }

@@ -139,7 +139,7 @@ class OnDemandRuleAddEditController: ConfigurationParametersViewController {
 				guard let enumController = segue.destination as? EnumPickerController else { break }
 
 				let enumValues: [NEOnDemandRuleInterfaceType] = [ .any, .wiFi, .cellular ],
-					stringValues = enumValues.flatMap { $0.description },
+                stringValues: [String] = enumValues.flatMap { $0.description },
 					currentSelection = enumValues.index { $0 == targetRule.interfaceTypeMatch }
 
 				enumController.setValues(stringValues, title: "Interface Type", currentSelection: currentSelection) { newRow in
@@ -167,7 +167,7 @@ class OnDemandRuleAddEditController: ConfigurationParametersViewController {
 				guard let enumController = segue.destination as? EnumPickerController else { break }
 
 				let enumValues: [NEOnDemandRuleAction] = [ .evaluateConnection, .disconnect, .connect, .ignore ],
-					stringValues = enumValues.flatMap { $0.description },
+                stringValues: [String] = enumValues.flatMap { $0.description },
 					currentSelection = enumValues.index { $0 == targetRule.action }
 
 				enumController.setValues(stringValues, title: "Action", currentSelection: currentSelection) { newRow in
