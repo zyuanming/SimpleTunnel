@@ -147,6 +147,7 @@ open class ClientTunnel: Tunnel {
 			return
 		}
 
+        simpleTunnelLog("send message: \(messageProperties)")
         ClientTunnel.connection?.write(messageData, completionHandler: { (error) in
             if let error = error {
                 let nsError = error as NSError

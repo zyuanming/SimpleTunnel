@@ -50,10 +50,14 @@ class ClientTunnelConnection: Connection {
 				TunnelMessageKey.TunnelType.rawValue: TunnelLayer.ip.rawValue as AnyObject
 			])
 
+        simpleTunnelLog("sending a \"connection open\" message to the tunnel server.")
 		clientTunnel.sendMessage(properties) { error in
 			if let error = error {
+                simpleTunnelLog("sending to the tunnel server FAIL!")
 				self.delegate.tunnelConnectionDidClose(self, error: error)
-			}
+            } else {
+                simpleTunnelLog("sending to the tunnel server SUCCESS.")
+            }
 		}
 	}
 
