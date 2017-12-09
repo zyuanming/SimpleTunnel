@@ -182,6 +182,7 @@ open class Tunnel: NSObject {
 	func sendMessage(_ messageProperties: [String: AnyObject]) -> Bool {
 		var written: Int = 0
 
+        simpleTunnelLog("sending Message: \(messageProperties)")
         guard let messageData = serializeMessage(messageProperties) else {
             simpleTunnelLog("Failed to create message data")
             return false
