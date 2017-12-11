@@ -193,11 +193,9 @@ class ServerTunnelConnection: Connection {
 	func startTunnelSource(utunSocket: Int32) {
 		guard setSocketNonBlocking(utunSocket) else { return }
         let newSource = DispatchSource.makeReadSource(fileDescriptor: utunSocket, queue: DispatchQueue.main)
-//		guard let newSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, UInt(utunSocket), 0, dispatch_get_main_queue()) else { return }
-//		dispatch_source_set_cancel_handler(newSource) {
-//			close(utunSocket)
-//			return
-//		}
+        (newSource as! DispatchSource).setCancelHandler {
+            close(utunSocket)
+        }
 
 		(newSource as! DispatchSource).setEventHandler() {
 			self.readPackets()
@@ -261,7 +259,6 @@ class ServerTunnelConnection: Connection {
             let buffer = packet.withUnsafeBytes {
                 return UnsafeMutableRawPointer(mutating: $0)
             }
-//			let buffer = UnsafeMutableRawPointer(mutating: packet.bytes)
 			var iovecList = [ iovec(iov_base: &protocolNumber, iov_len: MemoryLayout.size(ofValue: protocolNumber)), iovec(iov_base: buffer, iov_len: packet.count) ]
 
 			let writeCount = writev(utunSocket, &iovecList, Int32(iovecList.count))
@@ -270,7 +267,7 @@ class ServerTunnelConnection: Connection {
 					simpleTunnelLog("Got an error while writing to utun: \(errorString)")
 				}
 			}
-			else if writeCount < packet.count + MemoryLayout.size(ofValue: protocolNumber) {
+			else if writeCount <= packet.count + MemoryLayout.size(ofValue: protocolNumber) {
 				simpleTunnelLog("Wrote \(writeCount) bytes of a \(packet.count) byte packet to utun")
 			}
 		}

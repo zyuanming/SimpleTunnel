@@ -1,5 +1,7 @@
 # SimpleTunnel: Customized Networking Using the NetworkExtension Framework
 
+![Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg) ![platforms](https://img.shields.io/badge/platform-iOS | OSX-lightgray.svg)
+
 The SimpleTunnel project contains working examples of the four extension points provided by the Network Extension framework:
 
 1. Packet Tunnel Provider
