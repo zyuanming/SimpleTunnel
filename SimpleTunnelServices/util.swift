@@ -347,8 +347,8 @@ public func deepDescription(_ any: Any) -> String {
 
         var string = "<\(mirror.subjectType)"
 
-        if displayStyle == .class, let object = any as? AnyObject {
-            string += ": \(Unmanaged<AnyObject>.passUnretained(object).toOpaque())"
+        if displayStyle == .class {
+            string += ": \(Unmanaged<AnyObject>.passUnretained(any as AnyObject).toOpaque())"
         }
 
         string += "> {"

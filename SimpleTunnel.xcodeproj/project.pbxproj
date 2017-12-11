@@ -64,6 +64,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		60FE679A1FDD47B900FF0B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07CCB2F1A8940E600A4F1E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 720FCA941B057C7900B168EB;
+			remoteInfo = FilterDataProvider;
+		};
+		60FE679C1FDD47BD00FF0B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07CCB2F1A8940E600A4F1E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 720FCAA61B057C9400B168EB;
+			remoteInfo = FilterControlProvider;
+		};
+		60FE679E1FDD47C100FF0B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07CCB2F1A8940E600A4F1E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 442B69371B06724900382B6D;
+			remoteInfo = AppProxy;
+		};
 		C48A18BF1B103A5800453F3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B07CCB2F1A8940E600A4F1E5 /* Project object */;
@@ -542,6 +563,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				60FE679F1FDD47C100FF0B19 /* PBXTargetDependency */,
+				60FE679D1FDD47BD00FF0B19 /* PBXTargetDependency */,
+				60FE679B1FDD47B900FF0B19 /* PBXTargetDependency */,
 				C4F7B44D1B3B5F3A0033A7E4 /* PBXTargetDependency */,
 				C4CEAAFD1B1A4728009C8CC0 /* PBXTargetDependency */,
 			);
@@ -598,7 +622,8 @@
 					442B69371B06724900382B6D = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = XC238MH24L;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -613,7 +638,8 @@
 					};
 					720FCA941B057C7900B168EB = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						DevelopmentTeam = XC238MH24L;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -630,7 +656,8 @@
 					720FCAA61B057C9400B168EB = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = XC238MH24L;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -858,6 +885,21 @@
 			target = B01A16931A8A615F00BC9EFD /* SimpleTunnelServices */;
 			targetProxy = C48A18BF1B103A5800453F3E /* PBXContainerItemProxy */;
 		};
+		60FE679B1FDD47B900FF0B19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 720FCA941B057C7900B168EB /* FilterDataProvider */;
+			targetProxy = 60FE679A1FDD47B900FF0B19 /* PBXContainerItemProxy */;
+		};
+		60FE679D1FDD47BD00FF0B19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 720FCAA61B057C9400B168EB /* FilterControlProvider */;
+			targetProxy = 60FE679C1FDD47BD00FF0B19 /* PBXContainerItemProxy */;
+		};
+		60FE679F1FDD47C100FF0B19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 442B69371B06724900382B6D /* AppProxy */;
+			targetProxy = 60FE679E1FDD47C100FF0B19 /* PBXContainerItemProxy */;
+		};
 		C4CEAAF91B1A45A6009C8CC0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B01A16931A8A615F00BC9EFD /* SimpleTunnelServices */;
@@ -910,14 +952,18 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = AppProxy/AppProxy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = XC238MH24L;
 				INFOPLIST_FILE = AppProxy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HansonStudio.NetShuttle.AppProxy;
 				PRODUCT_MODULE_NAME = AppProxy;
 				PRODUCT_NAME = AppProxyProvider;
+				PROVISIONING_PROFILE = "be46058f-dffc-44b2-85ec-4a0969de3416";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_NetShuttleAppProxy;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -926,14 +972,17 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = AppProxy/AppProxy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = AppProxy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HansonStudio.NetShuttle.AppProxy;
 				PRODUCT_MODULE_NAME = AppProxy;
 				PRODUCT_NAME = AppProxyProvider;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -941,20 +990,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = FilterDataProvider/DataFilterExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yuanping zhang (LBY6X23WQG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yuanping zhang (LBY6X23WQG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = XC238MH24L;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = FilterDataProvider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HansonStudio.NetShuttle.FilterDataProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "6a983e80-8e20-4b1d-8201-925ea2cbfa61";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_NetShuttleFilterDataProvider;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -974,7 +1025,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -983,6 +1035,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = FilterControlProvider/ControlFilterExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = XC238MH24L;
 				ENABLE_TESTABILITY = YES;
@@ -991,8 +1044,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HansonStudio.NetShuttle.FilterControlProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7994d478-b5a5-42fd-a5ef-1c981d33b734";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_NetShuttleFilterControlProvider;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1001,6 +1057,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = FilterControlProvider/ControlFilterExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1008,8 +1065,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.HansonStudio.NetShuttle.FilterControlProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
